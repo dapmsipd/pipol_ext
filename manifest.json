@@ -5,11 +5,12 @@
     "manifest_version": 3,
     "author": "Mark Lester Bolotaolo",
     "action":{
+        "default_icon": "icon.png",
         "default_popup": "index.html"
     },
     "content_scripts": [
         {
-            "matches": ["https://pipol.neda.gov.ph/project/*/edit/view_my_projects","https://pipol.neda.gov.ph/*"],
+            "matches": ["https://pipol.neda.gov.ph/project/*/edit/view_my_projects"],
             "css": ["style.css"],
             "js": ["content-scripts.js"]
         }
