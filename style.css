@@ -6,3 +6,9 @@ div#overlay {
     opacity: 0.75;
     filter: alpha(opacity=75);
 }
+
+#pasteProvincialBreakdown {
+    top: 200px !important;
+    width: 220px !important;
+    text-transform: none !important;
+}

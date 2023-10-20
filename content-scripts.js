@@ -353,6 +353,8 @@ var pipsToPipolConverter = [
     }
 ];
 
+var divprovincialbreakdown = document.getElementById('divprovincialbreakdown');
+
 function generatePipolId(
     pipsId
 ) {
@@ -464,15 +466,14 @@ async function pasteProvincialBreakdown() {
         }
 
         buttonTrigger.innerHTML = 'PASTE PROVINCIAL INVESTMENTS';
+
+        window.location.hash = 'divprovincialbreakdown';
     } catch (err) {
         buttonTrigger.innerHTML = 'PASTE PROVINCIAL INVESTMENTS';
 
         alert('Something went wrong. Verify if you have copied the correct data. Error: ' + err.toString());
     }
-   
 }
-
-var divprovincialbreakdown = document.getElementById('divprovincialbreakdown');
 
 if (divprovincialbreakdown) {
     const button = document.createElement('button');
@@ -480,8 +481,8 @@ if (divprovincialbreakdown) {
     button.type = 'button';
     button.classList.add('btn-primary');
     button.classList.add('btn');
-    button.classList.add('btn-lg');
+    button.classList.add('fixed-plugin');
     button.innerHTML = 'PASTE PROVINCIAL INVESTMENTS';
     button.onclick = pasteProvincialBreakdown;
-    divprovincialbreakdown.appendChild(button);
+    document.body.appendChild(button);
 }
