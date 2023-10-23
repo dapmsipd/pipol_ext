@@ -1,6 +1,6 @@
 # PIPOL Extension
 
-Adds a "PASTE PROVINCIAL INVESTMENTS" button to PIPOL System
+Adds "PASTE REGIONAL INVESTMENTS" and "PASTE PROVINCIAL INVESTMENTS" button to PIPOL System
 
 > Note: This extension only works on Chrome-based browsers (Chrome, Brave, Edge, etc.).
 
@@ -36,3 +36,11 @@ Some caveats:
 
 1. The extension will only paste to selected provinces IN THE PIPOL System and will skip provinces that are not found. The extension will provide feedback to the user.
 2. The extension will NOT detect if there are provinces in the PIPOL System that are not present in the PIPS System. Manual checking should be done.
+
+## Limitations
+
+This tool relies on a specific data format available in the PIPS and therefore will not work when copy-pasting data elsewhere.
+
+## Issues/Bugs
+
+You may report issues/bugs at https://github.com/mlab817/pips.

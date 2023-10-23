@@ -1,3 +1,74 @@
+var regionConverter = [
+  {
+    'pipsId': 16,
+    'pipolId': 'NCR',
+  },
+  {
+    'pipsId': 15,
+    'pipolId': 'CAR',
+  },
+  {
+    'pipsId': 1,
+    'pipolId': 'Region_I',
+  },
+  {
+    'pipsId': 2,
+    'pipolId': 'Region_II',
+  },
+  {
+    'pipsId': 3,
+    'pipolId': 'Region_III',
+  },
+  {
+    'pipsId': 40,
+    'pipolId': 'Region_IVA',
+  },
+  {
+    'pipsId': 41,
+    'pipolId': 'Region_IVB',
+  },
+  {
+    'pipsId': 5,
+    'pipolId': 'Region_V',
+  },
+  {
+    'pipsId': 6,
+    'pipolId': 'Region_VI',
+  },
+  {
+    'pipsId': 7,
+    'pipolId': 'Region_VII',
+  },
+  {
+    'pipsId': 8,
+    'pipolId': 'Region_VIII',
+  },
+  {
+    'pipsId': 9,
+    'pipolId': 'Region_IX',
+  },
+  {
+    'pipsId': 10,
+    'pipolId': 'Region_X',
+  },
+  {
+    'pipsId': 11,
+    'pipolId': 'Region_XI',
+  },
+  {
+    'pipsId': 12,
+    'pipolId': 'Region_XII',
+  },
+  {
+    'pipsId': 13,
+    'pipolId': 'Region_XIII',
+  },
+  {
+    'pipsId': 14,
+    'pipolId': 'Region_BARMM',
+  },
+]
+
 var pipsToPipolConverter = [
     {
       "pipsId": 1,
@@ -355,10 +426,130 @@ var pipsToPipolConverter = [
 
 var divprovincialbreakdown = document.getElementById('divprovincialbreakdown');
 
-function generatePipolId(
+var divregionalbreakdown = document.getElementById('divregionalbreakdown');
+
+function generatePipolIdForProvince(
     pipsId
 ) {
     return pipsToPipolConverter.find((el) => el.pipsId == pipsId);
+}
+
+function generatePipolIdForRegion(pipsId) {
+  return regionConverter.find((el) => el.pipsId == pipsId);
+}
+
+async function pastRegionalBreakdown() {
+  var buttonTrigger = document.getElementById('pasteRegionalBreakdown');
+  buttonTrigger.innerHTML = 'PASTING...';
+
+  try {
+      var clipboardContent = await navigator.clipboard.readText();
+
+      var valueFromClipboard = JSON.parse(clipboardContent);
+  
+      if (! Array.isArray(valueFromClipboard)) {
+          alert('Value is invalid: Not an array');
+      }
+  
+      // validate if format is correct by inspecting the first item
+      var firstItem = valueFromClipboard[0];
+  
+      if (!firstItem.hasOwnProperty('region_id') 
+          || !firstItem.hasOwnProperty('y2022') 
+          || !firstItem.hasOwnProperty('y2023') 
+          || !firstItem.hasOwnProperty('y2024') 
+          || !firstItem.hasOwnProperty('y2025') 
+          || !firstItem.hasOwnProperty('y2026') 
+          || !firstItem.hasOwnProperty('y2027') 
+          || !firstItem.hasOwnProperty('y2028') 
+          || !firstItem.hasOwnProperty('y2029')) {
+          return alert('Data is INVALID. Please check if you have copied the data from provincial investments');
+      }
+      
+      var errors = [];
+
+      for (item of valueFromClipboard) {
+          var matchedId = generatePipolIdForRegion(item.region_id);
+  
+          if (!matchedId) {
+              console.log('region id not found');
+              continue;
+          }
+          
+          var pipolId = matchedId.pipolId;
+  
+          var y2022 = document.getElementById('2022_' + pipolId);
+          var y2023 = document.getElementById('2023_' + pipolId);
+          var y2024 = document.getElementById('2024_' + pipolId);
+          var y2025 = document.getElementById('2025_' + pipolId);
+          var y2026 = document.getElementById('2026_' + pipolId);
+          var y2027 = document.getElementById('2027_' + pipolId);
+          var y2028 = document.getElementById('2028_' + pipolId);
+          var y2029 = document.getElementById('cy_' + pipolId);
+
+          if (!y2022) {
+              // if not found add province to errors
+              errors.push(item.region.label);
+          }
+          
+          if (y2022 && !y2022.readOnly) {            
+              y2022.value = item.y2022;
+              y2022.focus();
+          }
+  
+          if (y2023 && !y2023.readOnly) {
+              y2023.value = item.y2023;
+              y2023.focus();
+          }
+  
+          if (y2024 && !y2024.readOnly) {
+              y2024.value = item.y2024;
+              y2024.focus();
+          }
+          
+          if (y2025 && !y2025.readOnly) {
+              y2025.value = item.y2025;
+              y2025.focus();
+          }
+          
+          if (y2026 && !y2026.readOnly) {
+              y2026.value = item.y2026;
+              y2026.focus();
+          }
+          
+          if (y2027 && !y2027.readOnly) {
+              y2027.value = item.y2027;
+              y2027.focus();
+          }
+          
+          if (y2028 && !y2028.readOnly) {
+              
+              y2028.value = item.y2028;
+              y2028.focus();
+          }
+          
+          if (y2029 && !y2029.readOnly) {
+              y2029.value = item.y2029;
+              y2029.focus();
+          }
+  
+          console.log('Successfully copied ' + item.region.label);
+      }
+      
+      if (errors.length > 0) {
+          alert('Successfully copied values except the following: ' + errors.join(', '));
+      } else {
+          alert('Successfully copied value');
+      }
+
+      buttonTrigger.innerHTML = 'PASTE REGIONAL INVESTMENTS';
+
+      window.location.hash = 'divregionalbreakdown';
+  } catch (err) {
+      buttonTrigger.innerHTML = 'PASTE REGIONAL INVESTMENTS';
+
+      alert('Something went wrong. Verify if you have copied the correct data. Error: ' + err.toString());
+  }
 }
 
 async function pasteProvincialBreakdown() {
@@ -392,7 +583,7 @@ async function pasteProvincialBreakdown() {
         var errors = [];
 
         for (item of valueFromClipboard) {
-            var matchedId = generatePipolId(item.province_id);
+            var matchedId = generatePipolIdForProvince(item.province_id);
     
             if (!matchedId) {
                 console.log('province id not found');
@@ -485,4 +676,16 @@ if (divprovincialbreakdown) {
     button.innerHTML = 'PASTE PROVINCIAL INVESTMENTS';
     button.onclick = pasteProvincialBreakdown;
     document.body.appendChild(button);
+}
+
+if (divregionalbreakdown) {
+  const button = document.createElement('button');
+  button.id = 'pasteRegionalBreakdown';
+  button.type = 'button';
+  button.classList.add('btn-danger');
+  button.classList.add('btn');
+  button.classList.add('fixed-plugin');
+  button.innerHTML = 'PASTE REGIONAL INVESTMENTS';
+  button.onclick = pastRegionalBreakdown;
+  document.body.appendChild(button);
 }

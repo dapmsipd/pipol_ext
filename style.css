@@ -12,3 +12,9 @@ div#overlay {
     width: 220px !important;
     text-transform: none !important;
 }
+
+#pasteRegionalBreakdown {
+    top: 150px !important;
+    width: 220px !important;
+    text-transform: none !important;
+}
