@@ -65,7 +65,7 @@ var regionConverter = [
   },
   {
     'pipsId': 14,
-    'pipolId': 'Region_BARMM',
+    'pipolId': 'BARMM',
   },
 ]
 
