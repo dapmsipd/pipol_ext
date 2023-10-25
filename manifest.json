@@ -10,7 +10,10 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://pipol.neda.gov.ph/project/*/edit/view_my_projects"],
+            "matches": [
+                "https://pipol.neda.gov.ph/project/*/edit/view_my_projects",
+                "https://pipol.neda.gov.ph/project/create"
+            ],
             "css": ["style.css"],
             "js": ["content-scripts.js"]
         }
